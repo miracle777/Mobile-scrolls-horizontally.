@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Swiper.jsを使用 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
+    
+    <title>Swipe Responsive Website</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 共通スタイル */
+        .content-section {
+            padding: 20px;
+            box-sizing: border-box;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* モバイル用スタイル */
+        @media (max-width: 768px) {
+            .swiper-container {
+                height: 100vh;
+                width: 100%;
+            }
+
+            .page-1 { background-color: white; }
+            .page-2 { background-color: blue; }
+            .page-3 { background-color: green; }
+            .page-4 { background-color: yellow; }
+            .page-5 { background-color: red; }
+
+            /* モバイルでのみSwiperのスタイルを適用 */
+            .swiper-slide {
+                height: 100vh;
+            }
+        }
+
+        /* デスクトップ用スタイル */
+        @media (min-width: 769px) {
+            .content-section {
+                height: 100vh;
+                padding: 40px;
+            }
+
+            /* デスクトップではSwiperのスタイルを上書き */
+            .swiper-wrapper {
+                display: block;
+                transform: none !important;
+            }
+
+            .swiper-slide {
+                height: 100vh;
+                width: 100% !important;
+                margin-right: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide content-section page-1">Item 1</div>
+            <div class="swiper-slide content-section page-2">Item 2</div>
+            <div class="swiper-slide content-section page-3">Item 3</div>
+            <div class="swiper-slide content-section page-4">Item 4</div>
+            <div class="swiper-slide content-section page-5">Item 5</div>
+        </div>
+    </div>
+
+    <script>
+        // 画面幅に応じてSwiperを初期化または破棄する
+        let swiper = null;
+
+        function initSwiper() {
+            if (window.innerWidth <= 768) {
+                // モバイルの場合のみSwiperを初期化
+                if (!swiper) {
+                    swiper = new Swiper('.swiper-container', {
+                        direction: 'horizontal',
+                        loop: false,
+                        allowTouchMove: true,
+                    });
+                }
+            } else {
+                // デスクトップの場合はSwiperを破棄
+                if (swiper) {
+                    swiper.destroy(true, true);
+                    swiper = null;
+                }
+            }
+        }
+
+        // 初期化
+        initSwiper();
+
+        // リサイズ時に再初期化
+        window.addEventListener('resize', initSwiper);
+    </script>
+</body>
+</html>
